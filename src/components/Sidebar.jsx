@@ -1,0 +1,7 @@
+import React from 'react';
+import { STUDENT_NAV_ITEMS, FACULTY_NAV_ITEMS, MANAGEMENT_NAV_ITEMS } from '../constants.js';
+
+export default function Sidebar({ page, profile, role, onNavigate, open, onClose }) {
+  const navigation = role === 'teacher' ? FACULTY_NAV_ITEMS : role === 'management' ? MANAGEMENT_NAV_ITEMS : STUDENT_NAV_ITEMS;
+  return <><div className={`mobile-scrim ${open ? 'visible' : ''}`} onClick={onClose} /><aside className={`side ${open ? 'open' : ''}`}><div className="brand"><div className="brand-mark">M</div><div><strong>myriad</strong><small>TECHNICAL COLLEGE</small></div></div><div className="nav-label">{role === 'teacher' ? 'Faculty workspace' : role === 'management' ? 'Management workspace' : 'Student workspace'}</div><nav className="nav">{navigation.map(([name, glyph]) => <button key={name} onClick={() => onNavigate(name)} className={page === name ? 'active' : ''}><span className="ico">{glyph}</span>{name}</button>)}</nav><div className="sidebar-bottom"><div className="help-card"><b>Need a hand?</b><p>Find answers and get help with your campus account.</p><a href="mailto:support@northstar.edu">Contact support ↗</a></div><div className="profile-mini"><div className="avatar">{(profile.name || 'A S').split(' ').map(w => w[0]).join('').slice(0, 2)}</div><div><b>{profile.name}</b><small>{role === 'teacher' ? 'Faculty' : role === 'management' ? 'Management' : (profile.studentId || profile.email)}</small></div></div></div></aside></>;
+}
